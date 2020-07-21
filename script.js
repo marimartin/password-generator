@@ -17,7 +17,13 @@ var includeUpper;
 var inputLength;
 var array_of_functions = [];
 
+// When Generate Button is clicked...
+generateEl.addEventListener("click", () => {
+  passwordConditions()
+  generatePassword()
+});
 
+// Prompts that provide conditions for generated password
 function passwordConditions() {
   includeUpper = confirm("Do you want to include Uppercase Letters?");
   includeLower = confirm("Do you want to include Lowercase Letters?");
@@ -26,24 +32,20 @@ function passwordConditions() {
   passwordLengthPrompt()
 };
 
+// Final prompt - leads to 
 function passwordLengthPrompt() {
   inputLength = prompt(
     "How many characters do you want your password to be?",
     "Enter a number between 8 and 128"
   );
 
-  // inputLength must be between 8 and 128. if not ask again (How to loop this?)
+  // inputLength must be between 8 and 128. if not ask again
   if (inputLength <= 7 || inputLength >= 129) {
     passwordLengthPrompt()
   }
 };
 
-// When Generate Button is clicked...
-generateEl.addEventListener("click", () => {
-  passwordConditions()
-  generatePassword()
-});
-
+// Which functions to include based on user responses to prompt
 function charactersToInclude() {
   if (includeUpper) {
     array_of_functions.push(getRandomUpper)
@@ -68,6 +70,7 @@ function generatePassword() {
   for (i = 0; i <= inputLength; i++) {
     generatedPassword += array_of_functions[Math.floor(Math.random() * array_of_functions.length)]();
   }
+
   array_of_functions = []
 
   console.log(generatedPassword)
@@ -75,20 +78,7 @@ function generatePassword() {
   resultEl.innerHTML = generatedPassword;
 }
 
-// if includeUpper is true add uppercase
-// if includeLower is true add lowercase
-// if includeNumber is true add Numbers
-// if includeSybol is true add symbols
-
-
-// math.random for index number array_of_functions
-
-
-
-
-
 // Generator Functions
-
 function getRandomUpper() {
   return String.fromCharCode(Math.floor(Math.random() * 26) + 65);
 }
